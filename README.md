@@ -1,50 +1,91 @@
-# Welcome to your Expo app 👋
+# Plantilla Expo + Tailwind
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Esta plantilla viene configurada con [Expo](https://expo.dev), [Tailwind CSS](https://tailwindcss.com) (vía [NativeWind](https://www.nativewind.dev/)) y [Expo Router](https://docs.expo.dev/router/introduction), para que puedas empezar rápidamente con:
 
-## Get started
+- **Ruteo basado en archivos**
+- **Estilos con Tailwind**
+- **Instalación fácil de fuentes**
+- **Scripts prácticos** (por ejemplo, para resetear el proyecto)
 
-1. Install dependencies
+## Cómo usar esta plantilla
 
+1. **Instalar dependencias**
    ```bash
    npm install
    ```
-
-2. Start the app
+2. **Iniciar el proyecto**
 
    ```bash
-    npx expo start
+   npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+   Podrás abrirlo en el emulador de Android, iOS o en la web. También puedes usar [Expo Go](https://expo.dev/client) en tu dispositivo.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+3. **Editar la app**
+   - Encuentra los archivos principales en la carpeta `app`.
+   - Aquí se usa [Expo Router](https://docs.expo.dev/router/introduction) para manejar las rutas en forma de archivos.
+   - Puedes crear nuevas pantallas añadiendo archivos en la carpeta `app` (por ejemplo, `app/perfil.tsx`).
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Tailwind y NativeWind
 
-## Get a fresh project
+- El archivo de configuración de Tailwind está en `tailwind.config.js`.
+- Para usar clases de Tailwind en tus componentes, simplemente añade `className="<tus-clases>"` en lugar de `style={}`.
 
-When you're ready, run:
+## Añadir tipografías personalizadas
 
-```bash
-npm run reset-project
-```
+1. **Colocar tus fuentes** en la carpeta `assets/fonts` (créala si no existe).
+2. **Registrar las fuentes** (por ejemplo, en `app/_layout.tsx` o un archivo global):
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+   ```js
+   import { useFonts } from "expo-font";
 
-## Learn more
+   export default function Layout() {
+     const [loaded] = useFonts({
+       MiFuente: require("../assets/fonts/MiFuente.ttf"),
+     });
 
-To learn more about developing your project with Expo, look at the following resources:
+     if (!loaded) return null;
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+     return <Slot />;
+   }
+   ```
 
-## Join the community
+3. **Usarlas en Tailwind**
+   - En `tailwind.config.js`:
+     ```js
+     theme: {
+       extend: {
+         fontFamily: {
+           miFuente: ["MiFuente", "sans-serif"],
+         },
+       },
+     },
+     ```
+   - Luego en tus componentes:
+     ```jsx
+     <Text className="font-miFuente text-base">
+       Texto con fuente personalizada
+     </Text>
+     ```
 
-Join our community of developers creating universal apps.
+## Script para reiniciar el proyecto
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Si quieres un proyecto limpio sin el código de ejemplo, ejecuta:
+  ```bash
+  npm run reset-project
+  ```
+  Esto moverá los archivos de ejemplo a `app-example` y creará una carpeta `app` vacía para empezar desde cero.
+
+## Más información
+
+- [Documentación de Expo](https://docs.expo.dev/)
+- [Guía de Expo Router](https://docs.expo.dev/router/introduction/)
+- [NativeWind](https://www.nativewind.dev/docs)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+
+## Comunidad
+
+- [Expo en GitHub](https://github.com/expo/expo)
+- [Discord oficial de Expo](https://chat.expo.dev)
+
+¡Disfruta creando tus apps con esta plantilla!
